@@ -1,12 +1,15 @@
 ﻿using CJeanPIerreAPI.Data;
 using CJeanPIerreAPI.Models;
 using CJeanPIerreAPI.Repositories;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CJeanPIerreAPI.Controllers
 {
@@ -52,23 +55,45 @@ namespace CJeanPIerreAPI.Controllers
             Console.WriteLine($"Creado producto: {item.Nombre} con Id {item.Id}");
             return Created("productos", item);
 
-        }
-
+        }   
+        [HttpPut("{id}")]
         [HttpPut]
         public IActionResult Put([FromODataUri] int id, [FromBody] Producto item)
+        
         {
+            //var producto = _repo.GetById(id).FirstOrDefault();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if (id != item.Id)
+            if (id!= item.Id)
             {
-                Console.WriteLine($"No hay match: {id} =/= {item.Id} ");
                 return BadRequest();
             }
             _repo.Update(item);
             _repo.Save();
             return Ok(item);
+        }
+
+
+        [HttpPatch("{id}")]
+        public IActionResult Patch([FromODataUri] int id, [FromBody] JsonPatchDocument<Producto> item)
+        {
+            if (item != null)
+            {
+                var producto = _repo.GetById(id).FirstOrDefault();                
+                item.ApplyTo(producto, ModelState);
+                _repo.Update(producto);
+                _repo.Save();
+                return Ok(item);
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return BadRequest(ModelState);
+
+
         }
     }
             

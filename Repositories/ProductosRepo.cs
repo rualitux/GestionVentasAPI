@@ -29,7 +29,7 @@ namespace CJeanPIerreAPI.Repositories
 
             var lista = _context.Productos
                 .Include(p => p.Inventarios)
-                .Include(p=>p.CompraDetalles)               
+                .Include(p => p.CompraDetalles)
                 .AsQueryable();
             return lista;
         }
@@ -37,7 +37,7 @@ namespace CJeanPIerreAPI.Repositories
         public IQueryable<Producto> GetById(int id)
         {
             var item = _context.Productos
-                .Include (p => p.Inventarios)
+                .Include(p => p.Inventarios)
                 .Include(p => p.CompraDetalles)
                 .Where(p => p.Id == id);
             return item;

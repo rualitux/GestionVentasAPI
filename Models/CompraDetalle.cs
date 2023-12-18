@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,6 +16,9 @@ namespace CJeanPIerreAPI.Models
         public Decimal? CostoActual { get; set; }
         public Decimal? SubTotalOrdenado {
             get { return CostoActual * CantidadOrdenada; }
+        }
+        public Decimal? SubTotalDiferencia {
+            get { return DiferenciaPrecio * CantidadRecibida; }
         }
         public Decimal? SubTotalRecibido {
             get { return CostoActual * CantidadRecibida; } }
@@ -59,11 +63,41 @@ namespace CJeanPIerreAPI.Models
                 if (_PrecioProducto != null)
                 { return; }
                 DiferenciaPrecio = value; }
-        }           
-    
+        }
+        public string? ProductoString {
+            get
+            {
+                if (Producto == null)
+                {
+                    return null;
+                }
+                return Producto.Nombre;
+            }
+            set
+            {
+                if (ProductoString != null)
+                    ProductoString = value;
+            }
+        }
+
+        public string? EstadoAhorroItem
+        {
+            get
+            {
+                if (SubTotalDiferencia != null)
+                {
+                    if (SubTotalDiferencia >= 0)
+                        return "Gasto";
+                    return "Ahorro";
+                }
+                return null;
+            }
+        }
+
         public int? CompraId { get; set; }
         [ForeignKey("ProductoId")]
         public int? ProductoId { get; set; }
+        [JsonIgnore]
         public Producto? Producto { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace CJeanPIerreAPI.Data
         }
 
 
+        public DbSet<Enumerado> Enumerados => Set<Enumerado>();
         public DbSet<Producto> Productos => Set<Producto>();
         public DbSet<Inventario> Inventarios => Set<Inventario>();
         public DbSet<Proveedor> Proveedors => Set<Proveedor>();

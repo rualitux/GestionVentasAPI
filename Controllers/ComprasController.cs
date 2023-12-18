@@ -35,14 +35,21 @@ namespace CJeanPIerreAPI.Controllers
         }
         [HttpPost]
         public IActionResult Post([FromBody] Compra item)
+        
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            if (item.Proveedor == null && item.ProveedorId == null)
+            {
+                return BadRequest("Debe tener Proveedor");
+            }
             _service.NuevaCompra(item);
             Console.WriteLine($"Creado compra: {item.NumeroReferencia} con Id {item.Id}");
             return Created("compras", item);
+            //return CreatedAtAction(nameof(GetCompraDetalleById), "Compras", new { key = item.Id }, item);
+            //return Ok();
 
         }
     }

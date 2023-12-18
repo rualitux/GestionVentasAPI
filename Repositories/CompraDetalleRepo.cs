@@ -34,7 +34,8 @@ namespace CJeanPIerreAPI.Repositories
         {
             
             var item = _context.CompraDetalles
-                //.Include(p=>p.Producto)
+                    .Include(p=>p.Producto)
+                    .ThenInclude(p=>p.Inventarios)
                         .Where(p => p.Id == id);
             return item;
         }

@@ -26,10 +26,15 @@ namespace CJeanPIerreAPI.Repositories
 
         public Proveedor ForzarProveedor(int id)
         {
-            Proveedor? proveedor = _context.Compras.Include(p => p.Proveedor)
-                 .Single(f => f.ProveedorId == id)
-                 .Proveedor;
-            return proveedor;
+            var Listaproveedor = _context.Compras.Include(p => p.Proveedor);      
+            var singleProveedor= Listaproveedor.Single(f => f.ProveedorId == id).Proveedor;
+            return singleProveedor;
+        }
+        public Producto ForzarProducto(int id)
+        {
+            var ListaProducto = _context.CompraDetalles.Include(p => p.Producto);
+            var singleProducto = ListaProducto.Single(f => f.ProductoId == id).Producto;
+            return singleProducto;
         }
 
 
@@ -39,6 +44,8 @@ namespace CJeanPIerreAPI.Repositories
 
             var lista = _context.Compras
                 .Include(p => p.CompraDetalles)
+                .ThenInclude(p=>p.Producto)
+                .ThenInclude(p=>p.Inventarios)
                 .AsQueryable();
             return lista;
         }

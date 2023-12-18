@@ -48,30 +48,55 @@ namespace CJeanPIerreAPI.Services
         public IQueryable<CompraDetalle> GetCompraDetalleById(int id)
         {
 
-            var item = _detalleRepo.GetById(id);
-                return item;
+            IQueryable<CompraDetalle> item = _detalleRepo.GetById(id);                           
+            return item;
             
         }
         
 
-        public void NuevaCompra(Compra compra)
+        public void NuevaCompra(Compra compra)        
+        
         {
             compra.FechaCompra = DateTime.Now;
-            List<CompraDetalle> listaAgregar = new List<CompraDetalle>();      
-            _compraRepo.Create(compra);         
+            _compraRepo.Create(compra);
+            List<Inventario> inventariosAgregados = new List<Inventario>();
+            foreach (var item in compra.CompraDetalles)
+            {
+                Inventario nuevoInventario = new Inventario() { 
+                Stock = item.CantidadRecibida,
+                ProductoId = item.ProductoId,
+                //Manda a almacen directamente
+                AreaId = 1
+                };
+                _inventarioRepo.Create(nuevoInventario);
+            }
             DateTime? dateCompra = compra.FechaCompra;
-            string anoCompra = dateCompra.Value.ToString("yyyMMddHHmm");            
-            if (compra.ProveedorId != null)
+            string anoCompra = dateCompra.Value.ToString("yyyMMddHHmm");
+            //Explicit/Eager loading de NavP: Compra.Proveedor
+            if (compra.Proveedor == null)
             {
                 int? proveedorIdNullable = compra.ProveedorId;
-                compra.Proveedor = _compraRepo.ForzarProveedor((int)proveedorIdNullable);
-                compra.NumeroReferencia = $"P{compra.Proveedor.RUC}T{anoCompra}";
+                //compra.Proveedor = _compraRepo.ForzarProveedor((int)proveedorIdNullable);
+                compra.Proveedor = ForzarProveedor((int)proveedorIdNullable);
             }
-            _compraRepo.Save();
-        }
+            compra.NumeroReferencia = $"P{compra.Proveedor.RUC}F{anoCompra}";
+            _compraRepo.Save();            
+        }  
+
         public void NuevoCompraDetalle(CompraDetalle compraDetalle)
         {
             _detalleRepo.Create(compraDetalle);
+        }
+
+        public void NuevoInventario(Inventario inventario)
+        {
+            _inventarioRepo.Create(inventario);
+        }
+          public Proveedor ForzarProveedor(int id)
+        {
+            var proveedor = _proveedorRepo.GetById(id);
+            var proveedorSalida = proveedor.Single();
+            return proveedorSalida;
         }
     }
 }

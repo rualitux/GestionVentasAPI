@@ -10,6 +10,8 @@ namespace CJeanPIerreAPI.Repositories
         public void Update(Compra compra);
         public void Delete(Compra compra);
         public Proveedor ForzarProveedor(int id);
+        public Producto ForzarProducto(int id);
+
         public bool Save();
     }
 }
