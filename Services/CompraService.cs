@@ -57,12 +57,19 @@ namespace CJeanPIerreAPI.Services
         public void NuevaCompra(Compra compra)        
         
         {
-            compra.FechaCompra = DateTime.Now;
+            compra.FechaRegistro = DateTime.Now;
+            compra.FechaModificacion = DateTime.Now;
             _compraRepo.Create(compra);
             List<Inventario> inventariosAgregados = new List<Inventario>();
             foreach (var item in compra.CompraDetalles)
             {
-                Inventario nuevoInventario = new Inventario() { 
+                item.FechaRegistro = DateTime.Now;
+                item.FechaModificacion = DateTime.Now;                 
+                Inventario nuevoInventario = new Inventario() {
+                Lote = item.Lote,
+                FechaRegistro = item.FechaRegistro,
+                FechaModificacion = item.FechaModificacion,
+                FechaExpiracion = item.FechaExpiracion,
                 Stock = item.CantidadRecibida,
                 ProductoId = item.ProductoId,
                 //Manda a almacen directamente
@@ -70,7 +77,7 @@ namespace CJeanPIerreAPI.Services
                 };
                 _inventarioRepo.Create(nuevoInventario);
             }
-            DateTime? dateCompra = compra.FechaCompra;
+            DateTime? dateCompra = compra.FechaRegistro;
             string anoCompra = dateCompra.Value.ToString("yyyMMddHHmm");
             //Explicit/Eager loading de NavP: Compra.Proveedor
             if (compra.Proveedor == null)

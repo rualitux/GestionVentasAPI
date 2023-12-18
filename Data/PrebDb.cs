@@ -57,7 +57,7 @@ namespace CJeanPIerreAPI.Data
                     {                       
                         Nombre = "LecheFresca",
                         CostoEstandar = 4.20m,
-                        StockMinimo = 5,
+                        StockMinimo = 52,
                         Inventarios = new List<Inventario> { 
                         new Inventario() {
                         Stock =4,
@@ -69,6 +69,7 @@ namespace CJeanPIerreAPI.Data
                      {
                          Nombre = "Queso",
                          CostoEstandar = 2.32m,
+                         StockMinimo =24,
                          Inventarios = new List<Inventario> {
                          new Inventario()
                          {

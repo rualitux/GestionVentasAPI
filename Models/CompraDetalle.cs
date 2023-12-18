@@ -93,7 +93,10 @@ namespace CJeanPIerreAPI.Models
                 return null;
             }
         }
-
+        public DateTime? FechaExpiracion { get; set; }
+        public DateTime? FechaRegistro { get; set; }
+        public DateTime? FechaModificacion { get; set; }
+        public String? Lote { get; set; }
         public int? CompraId { get; set; }
         [ForeignKey("ProductoId")]
         public int? ProductoId { get; set; }

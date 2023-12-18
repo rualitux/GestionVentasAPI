@@ -10,7 +10,6 @@ namespace CJeanPIerreAPI.Models
 
         [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage ="Precio debe tener máximo 2 decimales")]
         public decimal? CostoEstandar { get; set; }
-        public DateTime? FechaVencimiento { get; set; }
         public int? CategoriaId { get; set; }
         Enumerado? Categoria { get; set; }
         Enumerado? Presentacion { get; set; }

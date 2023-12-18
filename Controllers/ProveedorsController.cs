@@ -44,6 +44,8 @@ namespace CJeanPIerreAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+            item.FechaRegistro = DateTime.Now;
+            item.FechaModificacion = DateTime.Now;
             _proveedorRepo.Create(item);
             _proveedorRepo.Save();
             Console.WriteLine($"Creado proveedor: {item.RUC} con Id {item.Id}");
@@ -64,6 +66,7 @@ namespace CJeanPIerreAPI.Controllers
             {
                 return BadRequest();
             }
+            item.FechaModificacion = DateTime.Now;
             _proveedorRepo.Update(item);
             _proveedorRepo.Save();
             return Ok(item);
@@ -75,8 +78,9 @@ namespace CJeanPIerreAPI.Controllers
         {
             if (item != null)
             {
-                var itemOriginal = _proveedorRepo.GetById(id).FirstOrDefault();
+                var itemOriginal = _proveedorRepo.GetById(id).FirstOrDefault();               
                 item.ApplyTo(itemOriginal, ModelState);
+                itemOriginal.FechaModificacion = DateTime.Now;
                 _proveedorRepo.Update(itemOriginal);
                 _proveedorRepo.Save();
                 return Ok(item);

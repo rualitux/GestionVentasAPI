@@ -7,6 +7,8 @@ namespace CJeanPIerreAPI.Models
         public int Id { get; set; }
         public string? NumeroReferencia { get; set; }
         public DateTime? FechaCompra { get; set; }
+        public DateTime? FechaRegistro { get; set; }
+        public DateTime? FechaModificacion { get; set; }
         public Decimal? TotalCompra {
 
             get {
