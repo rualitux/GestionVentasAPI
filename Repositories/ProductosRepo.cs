@@ -28,6 +28,8 @@ namespace CJeanPIerreAPI.Repositories
         {
 
             var lista = _context.Productos
+                .Include(p=>p.UnidadMedida)
+                .Include(p=>p.Categoria)
                 .Include(p => p.Inventarios)
                 .Include(p => p.CompraDetalles)
                 .AsQueryable();
@@ -37,6 +39,7 @@ namespace CJeanPIerreAPI.Repositories
         public IQueryable<Producto> GetById(int id)
         {
             var item = _context.Productos
+                //.Include(p => p.Categoria)
                 .Include(p => p.Inventarios)
                 .Include(p => p.CompraDetalles)
                 .Where(p => p.Id == id);
@@ -53,5 +56,7 @@ namespace CJeanPIerreAPI.Repositories
             return _context.SaveChanges() >= 0;
 
         }
+
+       
     }
 }

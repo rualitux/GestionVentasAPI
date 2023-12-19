@@ -44,6 +44,7 @@ builder.Services.AddCors(options =>
 );
 
 //Repos
+builder.Services.AddScoped<IEnumeradoRepo, EnumeradoRepo>();
 builder.Services.AddScoped<IProductosRepo, ProductosRepo>();
 builder.Services.AddScoped<IProveedorRepo, ProveedorRepo>();
 builder.Services.AddScoped<ICompraRepo, CompraRepo>();

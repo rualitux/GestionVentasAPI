@@ -29,7 +29,7 @@ namespace CJeanPIerreAPI.Data
                     new Enumerado() { Valor = "Baja de Inventario", Padre = 2 },
                     new Enumerado() { Valor = "Pan y Cereales", Padre = 1 },
                     new Enumerado() { Valor = "Carne", Padre = 1 },
-                    new Enumerado() { Valor = "Pescados y Mariscos", Padre = 1 },
+                    new Enumerado() { Valor = "Pescados y Mariscos", Padre = 1 }, //10
                     new Enumerado() { Valor = "Leche, Queso y Huevos", Padre = 1 },
                     new Enumerado() { Valor = "Aceites y Grasas", Padre = 1 },
                     new Enumerado() { Valor = "Frutas", Padre = 1 },
@@ -39,12 +39,19 @@ namespace CJeanPIerreAPI.Data
                     new Enumerado() { Valor = "Café, Te y Cacao", Padre = 1 },
                     new Enumerado() { Valor = "Aguas Minerales, Refrescos, Jugos de Frutas", Padre = 1 },
                     new Enumerado() { Valor = "Bebidas Alcohólicas", Padre = 1 },
-                    new Enumerado() { Valor = "Tabaco", Padre = 1 },
+                    new Enumerado() { Valor = "Tabaco", Padre = 1 }, //20
                     new Enumerado() { Valor = "Prendas de Vestir", Padre = 1 },
                     new Enumerado() { Valor = "Calzado", Padre = 1 },
                     new Enumerado() { Valor = "Artículos para el Hogar", Padre = 1 },
                     new Enumerado() { Valor = "Farmacéuticos", Padre = 1 },
-                    new Enumerado() { Valor = "Cuidado Personal", Padre = 1 }
+                    new Enumerado() { Valor = "Cuidado Personal", Padre = 1 },
+                    new Enumerado() { Valor = "Unidad de Medida"}, //26
+                    new Enumerado() { Valor = "Unidad", Padre = 26 },
+                    new Enumerado() { Valor = "Kilo", Padre = 26 },
+                    new Enumerado() { Valor = "Litro", Padre = 26 },
+                    new Enumerado() { Valor = "Metro", Padre = 26 }
+
+
 
 
 
@@ -56,11 +63,15 @@ namespace CJeanPIerreAPI.Data
                     new Producto()
                     {                       
                         Nombre = "LecheFresca",
+                        CategoriaId = 11,
                         CostoEstandar = 4.20m,
-                        StockMinimo = 52,
+                        StockMinimo = 52m,
+                        //UnidadMedidaId = 27, //"Unidad"
                         Inventarios = new List<Inventario> { 
                         new Inventario() {
-                        Stock =4,
+                        Estructura = "Unidad",
+                        MultiplicadorUnidad = 1,
+                        EstructuraCantidad =4m,
                         AreaId = 2
                         }
                         }                     
@@ -68,17 +79,23 @@ namespace CJeanPIerreAPI.Data
                      new Producto()
                      {
                          Nombre = "Queso",
+                         Presentacion = "Barras",
+                         UnidadMedidaId = 28, //"Unidad"
+                         CategoriaId = 11,
                          CostoEstandar = 2.32m,
-                         StockMinimo =24,
+                         StockMinimo =24m,
                          Inventarios = new List<Inventario> {
                          new Inventario()
-                         {
-                             Stock = 3,
+                         {   
+                             MultiplicadorUnidad = 1,
+                             EstructuraCantidad = 3m,
                              AreaId = 2
                          },
                          new Inventario()
                          { 
-                            Stock = 14
+
+                            EstructuraCantidad = 14m,
+                            AreaId=2,
                          }
                      }
                      }               
@@ -103,11 +120,13 @@ namespace CJeanPIerreAPI.Data
                         {
                             new CompraDetalle()
                             {
-                                ProductoId = 1, //LecheFresca                               
+                                ProductoId = 1, //LecheFresca
+                                Estructura = "Lata",
+                                MultiplicadorUnidad = 1,
                                 CostoActual = 4.50m,
-                                CantidadOrdenada = 5,
-                                CantidadRecibida = 3,
-                                CantidadRetornada = 1                                                                
+                                CantidadOrdenada = 5m,
+                                CantidadRecibida = 3m,
+                                CantidadRetornada = 1m                                                                
                             }
                         }
                     }

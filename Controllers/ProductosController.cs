@@ -31,6 +31,8 @@ namespace CJeanPIerreAPI.Controllers
         {
             return Ok(_repo.GetAll());
         }
+
+
         [HttpGet("{id}")]
         [EnableQuery]
         public ActionResult<Producto> GetById([FromRoute] int id)

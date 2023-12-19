@@ -25,6 +25,8 @@ namespace CJeanPIerreAPI.Controllers
         {
             return Ok(_proveedorRepo.GetAll());
         }
+
+
         [HttpGet("{id}")]
         [EnableQuery(MaxExpansionDepth =3)]
         public ActionResult<Proveedor> GetById([FromRoute] int id)

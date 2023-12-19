@@ -22,17 +22,30 @@ namespace CJeanPIerreAPI.Controllers
         {
             return Ok(_service.GetAllCompras());
         }
+        //[EnableQuery]
+        //[HttpGet("{key}")]
+        //public ActionResult<Producto> GetCompraDetalleById([FromODataUri] int key)
+        //{
+        //    var item = _service.GetCompraDetalleById(key);
+        //    if (item == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(item);
+        //}
+
         [EnableQuery]
         [HttpGet("{key}")]
-        public ActionResult<Producto> GetCompraDetalleById([FromODataUri] int key)
+        public ActionResult<Producto> GetCompraById([FromODataUri] int key)
         {
-            var item = _service.GetCompraDetalleById(key);
+            var item = _service.GetCompraById(key);
             if (item == null)
             {
                 return NotFound();
             }
             return Ok(item);
         }
+
         [HttpPost]
         public IActionResult Post([FromBody] Compra item)
         

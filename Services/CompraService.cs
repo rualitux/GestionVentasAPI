@@ -70,7 +70,10 @@ namespace CJeanPIerreAPI.Services
                 FechaRegistro = item.FechaRegistro,
                 FechaModificacion = item.FechaModificacion,
                 FechaExpiracion = item.FechaExpiracion,
-                Stock = item.CantidadRecibida,
+                //Stock = item.CantidadRecibida,
+                MultiplicadorUnidad = item.MultiplicadorUnidad,
+                Estructura = item.Estructura,
+                EstructuraCantidad = item.CantidadRecibida,
                 ProductoId = item.ProductoId,
                 //Manda a almacen directamente
                 AreaId = 1
@@ -104,6 +107,12 @@ namespace CJeanPIerreAPI.Services
             var proveedor = _proveedorRepo.GetById(id);
             var proveedorSalida = proveedor.Single();
             return proveedorSalida;
+        }
+
+        public IQueryable<Compra> GetCompraById(int id)
+        {
+            IQueryable<Compra> item = _compraRepo.GetById(id);
+            return item;
         }
     }
 }

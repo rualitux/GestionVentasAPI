@@ -9,21 +9,23 @@ namespace CJeanPIerreAPI.Models
     {
 
         public int Id { get; set; }
-        public int? CantidadOrdenada { get; set; }
-        public int? CantidadRecibida { get; set; }
-        public int? CantidadRetornada { get; set; }
+        public string? Estructura { get; set; } = "Unidad"; //Eg: Caja?? SixPack?? Saco 20 KG???
+        public decimal? MultiplicadorUnidad { get; set; } = 1; //Caja de 6 unidades? Saco de 20.0 kg?
+        public Decimal? CantidadOrdenada { get; set; }
+        public Decimal? CantidadRecibida { get; set; }
+        public Decimal? CantidadRetornada { get; set; }
         [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Precio debe tener máximo 2 decimales")]
         public Decimal? CostoActual { get; set; }
         public Decimal? SubTotalOrdenado {
-            get { return CostoActual * CantidadOrdenada; }
+            get { return CostoActual*(MultiplicadorUnidad * CantidadOrdenada); }
         }
         public Decimal? SubTotalDiferencia {
-            get { return DiferenciaPrecio * CantidadRecibida; }
+            get { return DiferenciaPrecio * (MultiplicadorUnidad * CantidadRecibida); }
         }
         public Decimal? SubTotalRecibido {
-            get { return CostoActual * CantidadRecibida; } }
+            get { return CostoActual * (MultiplicadorUnidad * CantidadRecibida); } }
         public Decimal? CostoRetornado {
-            get { return CantidadRetornada * CostoActual; } }
+            get { return CostoActual * (MultiplicadorUnidad * CantidadRetornada); } }
 
         Decimal? _PrecioProducto
         { 

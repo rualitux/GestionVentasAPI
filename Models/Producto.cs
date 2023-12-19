@@ -7,19 +7,21 @@ namespace CJeanPIerreAPI.Models
     {
         public int Id { get; set; }
         public string? Nombre { get; set; }
+        public string? Presentacion { get; set; } = "Unidad";
 
         [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage ="Precio debe tener máximo 2 decimales")]
         public decimal? CostoEstandar { get; set; }
-        public int? CategoriaId { get; set; }
-        Enumerado? Categoria { get; set; }
-        Enumerado? Presentacion { get; set; }
-        public int? StockTotal {           
+        public int? CategoriaId { get; set; } = 16; //Otros, en caso crashea TESTTT!!!
+        public Enumerado? Categoria { get; set; }
+        public int? UnidadMedidaId { get; set; } = 27;
+        public Enumerado? UnidadMedida { get; set; }
+        public Decimal? StockTotal {           
             get
             {
                 //Evita que crashee cuando hay un producto nuevo sin Inventario desde NuevaCompra
                 if (Inventarios != null)
                 {
-                    int? SumaTotal = 0;
+                    Decimal? SumaTotal = 0;
                     foreach (Inventario inventario in Inventarios)
                     {
                         SumaTotal += inventario.Stock;
@@ -29,7 +31,7 @@ namespace CJeanPIerreAPI.Models
                 return null;
             }             
         }
-        public int? StockMinimo { get; set; }
+        public Decimal? StockMinimo { get; set; }
         public string? EstadoStock { get
                  {
                 if (StockTotal != null)
